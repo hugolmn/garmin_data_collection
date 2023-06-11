@@ -141,6 +141,7 @@ class StatsCollector(GarminCollector):
             'highestRespirationValue'
         ])]
         
+        
         df = df.rename(columns={'calendarDate': 'date'})
         df = df.assign(date=pd.to_datetime(df['date']).dt.date)
 
