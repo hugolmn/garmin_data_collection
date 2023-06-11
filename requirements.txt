@@ -1,0 +1,5 @@
+garminconnect
+pandas==1.4.3
+sqlalchemy==1.4.40
+sqlalchemy-cockroachdb==1.4.3
+psycopg2-binary
