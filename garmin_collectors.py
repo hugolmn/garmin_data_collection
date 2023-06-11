@@ -269,7 +269,7 @@ class SleepCollector(GarminCollector):
         df = df.rename(columns=column_mapping)
         df = df.assign(date=pd.to_datetime(df['date']).dt.date)
         df['sleep_start'] = pd.to_datetime(df['sleep_start'], unit='ms', utc=True).dt.tz_convert('Europe/Paris').dt.tz_localize(None)
-        df['sleepEndTimestampGMT'] = pd.to_datetime(df['sleepEndTimestampGMT'], unit='ms', utc=True).dt.tz_convert('Europe/Paris').dt.tz_localize(None)
+        df['sleep_end'] = pd.to_datetime(df['sleep_end'], unit='ms', utc=True).dt.tz_convert('Europe/Paris').dt.tz_localize(None)
 
         return df
 
