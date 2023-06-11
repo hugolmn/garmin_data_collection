@@ -243,52 +243,33 @@ class SleepCollector(GarminCollector):
             for date in dates
         ])
         
-        df = df[[
-            'calendarDate',
-            'sleepStartTimestampGMT',
-            'sleepEndTimestampGMT',
-            'sleepTimeSeconds',
-            'deepSleepSeconds',
-            'lightSleepSeconds',
-            'remSleepSeconds',
-            'awakeSleepSeconds',
-            'averageSpO2Value',
-            'lowestSpO2Value',
-            'highestSpO2Value',
-            'averageSpO2HRSleep',
-            'averageRespirationValue',
-            'lowestRespirationValue',
-            'highestRespirationValue',
-            'awakeCount',
-            'avgSleepStress',
-            'sleepScores.overall.value'
-        ]]
+        column_mapping = {
+            'calendarDate': 'date',
+            'sleepStartTimestampGMT': 'sleep_start',
+            'sleepEndTimestampGMT': 'sleep_end',
+            'sleepTimeSeconds': 'sleep_time_seconds',
+            'deepSleepSeconds': 'deep_sleep_seconds',
+            'lightSleepSeconds': 'light_sleep_seconds',
+            'remSleepSeconds': 'rem_sleep_seconds',
+            'awakeSleepSeconds': 'awake_sleep_seconds',
+            'averageSpO2Value': 'average_spo2',
+            'lowestSpO2Value': 'lowest_spo2',
+            'highestSpO2Value': 'highest_spo2',
+            'averageSpO2HRSleep': 'average_spo2',
+            'averageRespirationValue': 'average_hr_sleep',
+            'lowestRespirationValue': 'lowest_respiration',
+            'highestRespirationValue': 'highest_respiration',
+            'awakeCount': 'awake_count',
+            'avgSleepStress': 'avg_sleep_stress',
+            'sleepScores.overall.value': 'sleep_score'
+        }
 
-        df = df.rename(columns={'calendarDate': 'date'})
+        df = df[df.columns.intersection(column_mapping.keys())]
+
+        df = df.rename(columns=column_mapping)
         df = df.assign(date=pd.to_datetime(df['date']).dt.date)
-        df['sleepStartTimestampGMT'] = pd.to_datetime(df['sleepStartTimestampGMT'], unit='ms', utc=True).dt.tz_convert('Europe/Paris').dt.tz_localize(None)
+        df['sleep_start'] = pd.to_datetime(df['sleep_start'], unit='ms', utc=True).dt.tz_convert('Europe/Paris').dt.tz_localize(None)
         df['sleepEndTimestampGMT'] = pd.to_datetime(df['sleepEndTimestampGMT'], unit='ms', utc=True).dt.tz_convert('Europe/Paris').dt.tz_localize(None)
-
-        df.columns = [
-            'date',
-            'sleep_start',
-            'sleep_end',
-            'sleep_time_seconds',
-            'deep_sleep_seconds',
-            'light_sleep_seconds',
-            'rem_sleep_seconds',
-            'awake_sleep_seconds',
-            'average_spo2',
-            'lowest_spo2',
-            'highest_spo2',
-            'average_hr_sleep',
-            'average_respiration',
-            'lowest_respiration',
-            'highest_respiration',
-            'awake_count',
-            'avg_sleep_stress',
-            'sleep_score'
-        ]
 
         return df
 
