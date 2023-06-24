@@ -88,7 +88,7 @@ class StatsCollector(GarminCollector):
             for date in dates
         ])
 
-        df = df[df.columns.intersection([
+        columns = [
             # Date
             'calendarDate',
             # Calories
@@ -139,9 +139,10 @@ class StatsCollector(GarminCollector):
             # Breathing
             'avgWakingRespirationValue',
             'highestRespirationValue'
-        ])]
+        ]
         
-        
+        df = df.loc[:, [col for col in columns if col in df.columns]]
+
         df = df.rename(columns={'calendarDate': 'date'})
         df = df.assign(date=pd.to_datetime(df['date']).dt.date)
 
