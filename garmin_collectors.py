@@ -151,7 +151,7 @@ class StatsCollector(GarminCollector):
         
         df = pd.concat([
             df['date'],
-            df.iloc[:, 1:].fillna(0).astype(int)
+            df.loc[:, df.columns[df.columns != 'date']].fillna(0).astype(int)
         ], axis=1)
         df = df.sort_values('date')
         return df
