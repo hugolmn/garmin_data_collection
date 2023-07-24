@@ -1,5 +1,4 @@
-garminconnect
-pandas==1.4.3
-sqlalchemy==1.4.40
-sqlalchemy-cockroachdb==1.4.3
-psycopg2-binary
+garminconnect==0.1.55
+pandas==1.5.0
+sqlalchemy==2.0.17
+sqlalchemy-cockroachdb
