@@ -281,7 +281,7 @@ class SleepLevelsCollector(GarminCollector):
 
     def collect_data(self, dates):
         df = pd.concat([
-            pd.DataFrame(self.garmin_api.get_sleep_data(date)['sleepLevels']).assign(date=date)
+            pd.DataFrame(self.garmin_api.get_sleep_data(date.date())['sleepLevels']).assign(date=date)
             for date in dates
         ])
         
